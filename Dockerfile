@@ -18,4 +18,4 @@ VOLUME [ "/etc/flocker" ]
 
 WORKDIR /root/flocker-config
 
-ENTRYPOINT [ "/bin/bash", "-c", "start.sh" ]
+CMD [ "/bin/bash", "-c", "/root/flocker-config/start.sh" ]
