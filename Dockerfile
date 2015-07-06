@@ -6,4 +6,16 @@ RUN apt-get -y install apt-transport-https software-properties-common && \
     apt-get update && \
     apt-get -y --force-yes install clusterhq-flocker-node
 
-ENTRYPOINT [ "/bin/bash" ]
+RUN mkdir /etc/flocker
+ADD start.sh /root/flocker-config/start.sh
+ADD /agents/base-agent.yml /root/flocker-config/base-agent.yml
+ADD /agents/aws-agent.yml /root/flocker-config/aws-agent.yml
+
+EXPOSE 5423
+EXPOSE 5424
+
+VOLUME [ "/etc/flocker" ]
+
+WORKDIR /root/flocker-config
+
+ENTRYPOINT [ "/bin/bash", "-c", "start.sh" ]

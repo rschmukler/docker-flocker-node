@@ -1,0 +1,6 @@
+dataset:
+  backend: "aws"
+  region: "AWS_REGION"
+  zone: "AWS_ZONE"
+  access_key_id: "AWS_KEY"
+  secret_access_key: "AWS_SECRET"
