@@ -14,13 +14,13 @@ FLOCKER_CONTROL_MODE=${FLOCKER_CONTROL_MODE:-false}
 
 CLUSTER_CRT=/etc/flocker/cluster.crt
 CONTROL_CRT=/etc/flocker/control-service.crt
+CONTROL_KEY=/etc/flocker/control-service.key
 NODE_CRT=/etc/flocker/node.crt
 NODE_KEY=/etc/flocker/node.key
 
 
 if  [ $FLOCKER_CONTROL_MODE = "true" ]; then
   echo "Running in control mode...";
-  exit 1;
 fi
 
 function checkCerts() {
@@ -70,7 +70,7 @@ function buildAgent() {
     echo "No FLOCKER_CONTROL_HOST specified. Exiting..."
     exit 1
   fi
-  CONTROL_PORT="${FLOCKER_CONTROL_PORT:-4524}"
+  FLOCKER_CONTROL_PORT="${FLOCKER_CONTROL_PORT:-4524}"
 
   sed -i 's/CONTROL_HOST/'$FLOCKER_CONTROL_HOST'/' $BASE_FILE
   sed -i 's/CONTROL_PORT/'$FLOCKER_CONTROL_PORT'/' $BASE_FILE
@@ -79,10 +79,10 @@ function buildAgent() {
 
   if [ $FLOCKER_DATASET_BACKEND = "aws" ]; then
     AWS_FILE=/root/flocker-config/aws-agent.yml
-    sed -i 's/AWS_REGION/'$FLOCKER_AWS_REGION'/' $AWS_FILE
-    sed -i 's/AWS_ZONE/'$FLOCKER_AWS_ZONE'/' $AWS_FILE
-    sed -i 's/AWS_KEY/'$FLOCKER_AWS_KEY'/' $AWS_FILE
-    sed -i 's/AWS_SECRET/'$FLOCKER_AWS_SECRET'/' $AWS_FILE
+    sed -i 's/AWS_REGION/'$FLOCKER_DATASET_AWS_REGION'/' $AWS_FILE
+    sed -i 's/AWS_ZONE/'$FLOCKER_DATASET_AWS_ZONE'/' $AWS_FILE
+    sed -i 's/AWS_KEY/'$FLOCKER_DATASET_AWS_KEY'/' $AWS_FILE
+    sed -i 's/AWS_SECRET/'$FLOCKER_DATASET_AWS_SECRET'/' $AWS_FILE
     cat $AWS_FILE >> $AGENT_FILE
   fi
 }
