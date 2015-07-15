@@ -1,4 +1,0 @@
-version: 1
-control-service:
-  hostname: "CONTROL_HOST"
-  port: "CONTROL_PORT"
